@@ -19,7 +19,10 @@ class GetterTypesTest extends TypeInferenceTestCase {
 	 * @return array<string, mixed>
 	 */
 	public function data_types(): array {
-		return self::gatherAssertTypes( __DIR__ . '/../../fixtures/types.php' );
+		return array_merge(
+			self::gatherAssertTypes( __DIR__ . '/../../fixtures/types.php' ),
+			self::gatherAssertTypes( __DIR__ . '/../../fixtures/blocks.php' )
+		);
 	}
 
 	/**

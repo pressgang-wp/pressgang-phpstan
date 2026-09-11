@@ -38,4 +38,13 @@ class OrphanContextGetterTest extends RuleTestCase {
 			)
 		);
 	}
+	/**
+	 * Block helpers do not participate in controller manifests.
+	 *
+	 * @return void
+	 * @test
+	 */
+	public function ignores_block_helpers(): void {
+		$this->analyse( array( __DIR__ . '/../../fixtures/blocks.php' ), array() );
+	}
 }
