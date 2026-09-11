@@ -47,6 +47,9 @@ class Page extends \Timber\Post {
 | `$page->meta('subtitle')` | the same `string`, not `mixed`. Named arguments supported | type extension |
 | `get_subtitle()` calling `$this->meta('subtitle')` | infinite recursion 💥 — rename it, or call `parent::meta()` | `pressgang.recursiveMetaGetter` |
 
+Using blocks? Covered too — `get_context()` and `render()` are checked directly, with
+no extra configuration. Details below. 🧱
+
 ## Install 📦
 
 Currently local and unpublished, so point Composer at your checkout:
@@ -153,6 +156,43 @@ absence from a manifest doesn't itself execute a query.
 </details>
 
 <details>
+<summary><strong>Blocks</strong> — they just work, with one gotcha</summary>
+
+Nothing to configure: analysing `src` already covers `src/Blocks`. Block subclasses
+use ordinary static `get_context()` and `render()` methods, so PHPStan checks those
+calls and overrides directly.
+
+**The gotcha:** blocks don't use controller manifests, so block `get_*()` helpers
+never need `@pressgang-context-helper` — the orphan rule leaves them alone.
+
+Model getters behave exactly as they do anywhere else, including inside a block:
+
+```php
+abstract class BaseBlock extends \PressGang\Blocks\Block {
+    /**
+     * @param array<string, mixed> $block
+     * @return array<string, mixed>
+     */
+    protected static function get_context(mixed $block): array {
+        $context = parent::get_context($block);        // array<string, mixed>
+        $context['subtitle'] = (new Page())->subtitle; // still a string
+        return $context;
+    }
+}
+```
+
+Document a custom `get_context()` as `array<string, mixed>` in and out, keeping the
+framework's native `mixed` parameter. Inherited implementations, trait helpers and
+deliberately replaced contexts are all supported — calling `parent::get_context()`
+isn't mandatory.
+
+The extension doesn't promise a fixed block-context shape: ACF fields can replace
+context keys, and their values depend on runtime field configuration. Block
+registration, callback wiring and template discovery still need runtime checks.
+
+</details>
+
+<details>
 <summary><strong>Boundaries</strong> — what it deliberately doesn't see</summary>
 
 The manifest resolver reads source-reflected property defaults and treats a child
@@ -200,23 +240,6 @@ vendor/bin/phpstan analyse -c /path/to/integration.neon --memory-limit=1G \
 ```
 
 </details>
-
-## Themes with blocks
-
-Include `src/Blocks` in your analysis paths (analysing all of `src` includes it).
-Block subclasses use ordinary static `get_context()` and `render()` methods;
-PHPStan checks those calls and overrides directly. They do not use controller
-manifests, so block `get_*()` helpers do not need `@pressgang-context-helper`.
-
-Document a custom `get_context()` input as `array<string, mixed>` and its return
-as `array<string, mixed>`, retaining the framework's native `mixed` parameter.
-Inherited implementations, trait helpers and intentionally replaced contexts are
-supported; calling `parent::get_context()` is not mandatory. Model getters used
-inside blocks receive the same property and `meta()` typing as elsewhere.
-
-The extension does not promise a fixed block-context shape: ACF fields can replace
-context keys, and their values depend on runtime field configuration. Block
-registration, callback wiring and template discovery need separate runtime checks.
 
 ## The rest of the fleet ⚓
 
