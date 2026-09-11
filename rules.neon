@@ -1,0 +1,6 @@
+# Advisory diagnostics; include alongside the auto-installed extension.
+services:
+	-
+		class: PressGang\PHPStan\Rules\OrphanContextGetterRule
+		tags:
+			- phpstan.rules.rule

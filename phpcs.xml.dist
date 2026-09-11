@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<ruleset name="PressGang PHPStan">
+ <description>WordPress conventions with PHPStan interface and PSR-4 naming.</description>
+ <file>src</file>
+ <file>tests/Unit</file>
+ <rule ref="WordPress">
+  <!-- Framework conventions omit redundant @package tags. -->
+  <exclude name="Squiz.Commenting.FileComment.MissingPackageTag"/>
+  <exclude name="WordPress.Files.FileName"/>
+  <exclude name="WordPress.NamingConventions.ValidFunctionName"/>
+  <exclude name="WordPress.NamingConventions.ValidVariableName"/>
+ </rule>
+ <!-- PHPStan interface implementations inherit the documented API contract. -->
+ <rule ref="Squiz.Commenting.FunctionComment">
+  <properties><property name="skipIfInheritdoc" value="true"/></properties>
+ </rule>
+</ruleset>

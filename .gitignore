@@ -1,0 +1,25 @@
+# Composer
+/vendor/
+# Library: consumers resolve their own dependency versions.
+/composer.lock
+
+# Local tool config overriding the tracked .dist files
+/phpstan.neon
+/phpunit.xml
+/phpcs.xml
+
+# Tool caches and reports
+/.phpunit.result.cache
+/.phpunit.cache/
+/.phpstan-cache/
+/.phpcs-cache
+/coverage/
+
+# Editors
+/.idea/
+/.vscode/
+*.swp
+
+# OS
+.DS_Store
+Thumbs.db

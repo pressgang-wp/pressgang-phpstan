@@ -1,0 +1,25 @@
+services:
+	-
+		class: PressGang\PHPStan\Reflection\DynamicGetterResolver
+	-
+		class: PressGang\PHPStan\Reflection\ContextManifestResolver
+	-
+		class: PressGang\PHPStan\Reflection\DynamicGetterPropertiesExtension
+		tags:
+			- phpstan.broker.propertiesClassReflectionExtension
+	-
+		class: PressGang\PHPStan\Type\MetaReturnTypeExtension
+		tags:
+			- phpstan.broker.dynamicMethodReturnTypeExtension
+	-
+		class: PressGang\PHPStan\Rules\ContextGettersRule
+		tags:
+			- phpstan.rules.rule
+	-
+		class: PressGang\PHPStan\Rules\RecursiveMetaGetterRule
+		tags:
+			- phpstan.rules.rule
+	-
+		class: PressGang\PHPStan\Reflection\ManifestMethodsExtension
+		tags:
+			- phpstan.methods.alwaysUsedMethodExtension
