@@ -78,6 +78,9 @@ parameters:
 Then run `vendor/bin/phpstan analyse --memory-limit=1G`. 🚀 Your theme and framework
 just need to be discoverable through Composer.
 
+The extension declares PressGang's `THEMENAME` constant, which child themes define in
+`functions.php`, so analysis needs no theme bootstrap file.
+
 `extension.neon` is included automatically — don't also add it by hand. Without
 `phpstan/extension-installer`, include `vendor/pressgang-wp/phpstan/extension.neon`
 yourself.

@@ -1,3 +1,9 @@
+parameters:
+	scanFiles:
+		- stubs/constants.php
+	dynamicConstantNames:
+		- THEMENAME
+
 services:
 	-
 		class: PressGang\PHPStan\Reflection\DynamicGetterResolver
