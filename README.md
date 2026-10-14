@@ -52,12 +52,12 @@ no extra configuration. Details below. 🧱
 
 ## Install 📦
 
-Currently local and unpublished, so point Composer at your checkout:
+Available on [Packagist](https://packagist.org/packages/pressgang-wp/phpstan).
+There are currently no tagged releases; install the `dev-main` version:
 
 ```sh
-composer config repositories.pressgang-phpstan path /path/to/pressgang-phpstan
 composer config allow-plugins.phpstan/extension-installer true
-composer require --dev pressgang-wp/phpstan:@dev phpstan/extension-installer:^1.4 \
+composer require --dev pressgang-wp/phpstan:dev-main phpstan/extension-installer:^1.4 \
   szepeviktor/phpstan-wordpress:^2.0 php-stubs/acf-pro-stubs:^6.8
 ```
 
