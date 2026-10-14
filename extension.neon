@@ -29,3 +29,7 @@ services:
 		class: PressGang\PHPStan\Reflection\ManifestMethodsExtension
 		tags:
 			- phpstan.methods.alwaysUsedMethodExtension
+	-
+		class: PressGang\PHPStan\Type\QuartermasterGetReturnTypeExtension
+		tags:
+			- phpstan.broker.dynamicMethodReturnTypeExtension
